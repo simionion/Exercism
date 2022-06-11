@@ -1,0 +1,5 @@
+exit
+(in-ns 'interest-is-interesting)
+(interest-rate 1000)
+(ns 'interest-is-interesting)
+exit
