@@ -11,18 +11,19 @@
     ))
 
 (defn annual-balance-update [balance]
-  ;(-> balance interest-rate (* (max balance (- balance))) bigdec (+ balance)))
-  (+ balance
-     (* 0.01M (* (bigdec (.abs balance)) (bigdec (interest-rate balance))))))
+  (-> balance
+      interest-rate
+      bigdec
+      (* (.abs balance) 0.01M)
+      (+ balance)))
 
 
 (defn amount-to-donate
   "TODO: add docstring"
   [balance tax-free-percentage]
-  (int
-    (let [regular-donation (* (/ balance 100) tax-free-percentage)
-          double-donation (* regular-donation 2)]
-      (if (< (annual-balance-update balance) 0)
-        0
-        (if (> balance 0) double-donation regular-donation)))
-      ))
+  (if (< balance 0)
+    0
+    (-> balance
+        (/ 100)
+        (* tax-free-percentage 2)
+        int)))
