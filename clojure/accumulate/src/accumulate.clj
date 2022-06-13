@@ -1,8 +1,6 @@
 (ns accumulate)
 
 (defn accumulate [fn todo]
-  (let [rez (atom [])]
-    (doseq [task todo]
-      (swap! rez conj (fn task)))
-    @rez
-    ))
+  (reduce #(conj %1 (fn %2)) [] todo))
+
+(print (accumulate inc [1 2 3]))
